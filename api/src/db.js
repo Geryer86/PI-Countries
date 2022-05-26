@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
@@ -35,10 +36,33 @@ const { Country, Activity } = sequelize.models;
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 
-Country.belongsToMany(Activity, {through: 'Country_activities'});
-Activity.belongsToMany(Country, {through: 'Country_activities'});
+Country.belongsToMany(Activity, { through: 'Country_activities' });
+Activity.belongsToMany(Country, { through: 'Country_activities' });
+
+const dbCountries = axios.get('https://restcountries.com/v3/all')
+.then(res => res.data)
+
+dbCountries.then(r => {
+  r.map(e => {
+    Country.findOrCreate({
+      where: {
+        id: e.cca3
+      },
+      defaults: {
+        id: e.cca3,
+        name: e.name.common,
+        img: e.flags[0],
+        continent: e.continents[0],
+        capital: e.capital,
+        subregion: e.subregion,
+        area: e.area,
+        population: e.population
+      }
+    })
+  })
+});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-  conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
+  conn: sequelize, // para importart la conexión { conn } = require('./db.js');
 };
