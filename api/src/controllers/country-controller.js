@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
         },
         limit: 10,
         offset: page,
-        order: [[req.query.orderBy, req.query.order]],
+        order: [[req.query.order]],
         include: Activity
       })
       console.log("Country by NAME");
@@ -54,11 +54,11 @@ router.get('/', async (req, res, next) => {
       const allTenCountries = await Country.findAll({
         limit: 10,
         offset: page,
-        order: [[req.query.orderBy, req.query.order]],
+        order: [["name", req.query.order]],
+        //order: [[req.query.orderBy, req.query.order]],
         include: Activity
       })
       res.json(allTenCountries)
-      //res.json(allCountries)
       console.log("All countries");
     }
   } catch (error) {

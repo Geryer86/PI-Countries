@@ -2,7 +2,7 @@ import './Home.css'
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries } from "../actions";
+import { getCountries, getDetails } from "../actions";
 import { Link } from "react-router-dom";
 import Cards from "./Cards";
 
@@ -12,13 +12,13 @@ export default function Home() {
   
   const [page, setPage] = useState(0)
   const [order, setOrder] = useState("ASC")
-  const [orderBy, setOrderBy] = useState("name", "population")
+  const [orderBy, setOrderBy] = useState("ASC")
 
   useEffect(() => {
     dispatch(getCountries(page, order, orderBy)) //mapDispatchToProps
   },[dispatch, page, order, orderBy])
 
-  const handleClick = (e => {
+  const handleClick = ((e) => {
     e.preventDefault();
     dispatch(getCountries());
   })
@@ -41,7 +41,7 @@ export default function Home() {
     }
   }
 
-  const orderAZ = (e) => {
+  const orderAlph = (e) => {
     e.preventDefault();
     setOrder(e.target.value);
   }
@@ -49,6 +49,11 @@ export default function Home() {
   const orderPop = (e) => {
     e.preventDefault();
     setOrderBy(e.target.value);
+  }
+
+  const detalle = (e) => {
+    e.preventDefault();
+    getDetails(e.id)
   }
 
   return(
@@ -59,8 +64,8 @@ export default function Home() {
         Boton
       </button>
       <div>
-        <select onChange={(e) => orderAZ(e)}>
-        <option>Alphabetic</option>
+        <select onChange={(e) => orderAlph(e)}>
+          <option>Alphabetic</option>
           <option value="ASC">A-Z</option>
           <option value="DESC">Z-A</option>
         </select>
@@ -84,6 +89,7 @@ export default function Home() {
                 <fragment>
                   <Link to={`/home/${e.id}`}>
                     <Cards name={e.name} continent={e.continent} img={e.img} population={e.population} key={e.id}/>
+                    <button onClick={detalle}></button>
                   </Link>
                 </fragment>
               )

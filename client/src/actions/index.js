@@ -14,6 +14,7 @@ export function getDetails(id) {
   return async function(dispatch) {
     try {
       const json = await axios.get(`http://localhost:3001/countries/${id}`);
+      console.log(json.data)
       return dispatch({
         type: "GET_DETAILS",
         payload: json.data
