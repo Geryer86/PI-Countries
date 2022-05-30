@@ -6,25 +6,41 @@ const { Op } = require('sequelize');
 const getActivity = require('../functions/getActivities')
 
 router.post('/', async (req, res, next) => {
-  const { name, difficulty, duration, season, countries } = req.body
+  const { name, difficulty, duration, season, countryID } = req.body
   try {
-    if (name && difficulty && duration && season && countries) {
-      //const countriesArray = countries.map(e=>e.countries)
-      const newActivity = await Activity.create({
-        name, difficulty, duration, season
-      })
+    if (name && difficulty && duration && season && countryID) {
+      
+      // const newActivity = await Activity.create({
+      //   name, difficulty, duration, season
+      // })
+
+      const [newActivity, created] = await Activity.findOrCreate({
+        where:{
+            name: name,
+            difficulty: difficulty,
+            duration: duration,
+            season: season,
+        },
+        include: [{
+          model: Country,
+          where: { id: countryID }
+      }]
+    })
+
       const countryFind = await Country.findAll({
         where: {
-          name: {
-            [Op.or]: countries
+          id: {
+            [Op.or]: countryID
           }
         }
       })
-      await countryFind.forEach((e) => {
-        return newActivity.addCountry(e.dataValues.id) //e.dataValues.id
-      });
-      //const countriesNames = countryFind.map(e => e.name)
-      //const newActivityCountries = newActivity.countries=countriesNames
+      
+      await newActivity.addCountries(countryFind)
+      
+      // await countryFind.forEach((e) => {
+      //   return newActivity.addCountry(e.countryFind) //e.dataValues.id
+      // });
+      
       res.status(201).send(newActivity)
     } else res.status(404).json("Missing data")
   } catch (err) {

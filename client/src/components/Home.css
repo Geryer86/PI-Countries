@@ -1,3 +1,9 @@
 .alpha {
   font-size: 100px;
 }
+
+.home {
+  background-color: bisque;
+  display: inline;
+  size: 50px;
+}

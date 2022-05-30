@@ -10,7 +10,7 @@ export function getCountries(page, order, orderBy) {
   }
 }
 
-export function getDetail(id) {
+export function getDetails(id) {
   return async function(dispatch) {
     try {
       const json = await axios.get(`http://localhost:3001/countries/${id}`);
@@ -19,10 +19,25 @@ export function getDetail(id) {
         payload: json.data
       })
     } catch(error) {
+      console.log(error)
+    }
+  }
+}
 
+export function getActivities(name) {
+  return async function(dispatch) {
+    try {
+      const json = await axios.get(`http://localhost:3001/activity?name=${name}`);
+      return dispatch({
+        type: "GET_ACTIVITIES",
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 }
 
 export const GET_COUNTRIES = "GET_COUNTRIES";
 export const GET_DETAILS = "GET_DETAILS";
+export const GET_ACTIVITIES = "GET_ACTIVITIES";

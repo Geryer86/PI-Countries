@@ -1,7 +1,7 @@
 import React from "react";
-import "./Cards.css"
+//import "./Cards.css"
 
-export default function Cards({ name, continent, population, img }) {
+export default function Card({ name, continent, population, img }) {
   const displayName = name.slice(0,25)
   return(
     <div className="cards">

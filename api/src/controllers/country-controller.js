@@ -6,7 +6,7 @@ const { Op } = require('sequelize')
 
 
 router.get('/', async (req, res, next) => {
-  const { name, order, page, filter } = req.query;
+  const { name, page, filter } = req.query;
   try {
     // const allCountries = await Country.findAll();
     // const allCountries = (await axios('https://restcountries.com/v3/all')).data.map(e => ({
