@@ -1,14 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, getDetail, getActivities } from "../actions";
+import { getActivities } from "../actions";
 import { Link } from "react-router-dom";
 import ActivityCard from "./ActivityCard";
 
 export default function Activities() {
   const dispatch = useDispatch()
   const allActivities = useSelector(state => state.activities) //mapStateToProps
-  const [name, setName] = useState("AGG")
+  const [name, setName] = useState()
 
   useEffect(() => {
     dispatch(getActivities(name)) //mapDispatchToProps

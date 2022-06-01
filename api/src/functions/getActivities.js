@@ -5,13 +5,15 @@ async function getActivity(name) {
   const activities = Activity.findAll({
     include: [{
       model : Country,
-      attributes: ['name'],
+      attributes: ["name"],
       through: {
         attributes: [],
       }
     }],
     where: {
-      name: { [Op.iLike]: name },
+      name: {
+        [Op.iLike]: name
+      },
     },
   });
   return activities

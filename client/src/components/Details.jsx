@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetails } from "../actions";
+import { getCountryById } from "../actions";
 import Card from "./Card";
 import { useParams } from "react-router";
 
@@ -9,23 +9,24 @@ import { useParams } from "react-router";
 export default function Details() {
   const dispatch = useDispatch()
   let { id } = useParams()
-  const details = useSelector(state => state.details)
+  const country = useSelector(state => state.country)
   //const [id, setId] = useState(id)
   
   useEffect(() => {
-    dispatch(getDetails(id))
+    dispatch(getCountryById(id))
   },[dispatch], id)
 
   return(
     <div>
       <Card
-        name={details.name}
-        continent={details.continent}
-        capital={details.capital}
-        population={details.population}
-        img={details.img}
-        activities={details.activities}
-        key={details.id}
+        name={country.name}
+        area={country.area}
+        continent={country.continent}
+        capital={country.capital}
+        population={country.population}
+        img={country.img}
+        activities={country.activities}
+        key={country.id}
       />
     </div>
   )

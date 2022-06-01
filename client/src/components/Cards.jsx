@@ -11,7 +11,6 @@ export default function Cards({ name, continent, population, img, id }) {
       <h6>{continent}</h6>
       <h6>Population {population}</h6>
       <img src={img} alt="No flag to display" width="180px" height="100px"/>
-      <button></button>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import './Home.css'
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, getDetails } from "../actions";
+import { getCountries, getCountryById } from "../actions";
 import { Link } from "react-router-dom";
 import Cards from "./Cards";
 
@@ -12,16 +12,13 @@ export default function Home() {
   
   const [page, setPage] = useState(0)
   const [order, setOrder] = useState("ASC")
-  const [orderBy, setOrderBy] = useState("ASC")
-
+  const [orderBy, setOrderBy] = useState("name")
+  const [continent, setCont] = useState("")
+  const [name, setName] = useState("")
+  
   useEffect(() => {
-    dispatch(getCountries(page, order, orderBy)) //mapDispatchToProps
-  },[dispatch, page, order, orderBy])
-
-  const handleClick = ((e) => {
-    e.preventDefault();
-    dispatch(getCountries());
-  })
+    dispatch(getCountries(orderBy, order, page, continent, name))
+  }, [dispatch, orderBy, order, page, continent, name])
 
   const prev = (e) => {
     e.preventDefault();
@@ -41,64 +38,102 @@ export default function Home() {
     }
   }
 
-  const orderAlph = (e) => {
+  const handleOrder = (e) => {
     e.preventDefault();
-    setOrder(e.target.value);
+    setOrder(e.target.value)
   }
 
-  const orderPop = (e) => {
+  const handleOrderBy = (e) => {
     e.preventDefault();
-    setOrderBy(e.target.value);
+    setOrderBy(e.target.value)
   }
 
-  const detalle = (e) => {
+  const selectCont = (e) => {
     e.preventDefault();
-    getDetails(e.id)
+    setCont(e.target.value);
   }
 
+  const filterName = (e) => {
+    e.preventDefault();
+    setName(e.target.value)
+  }
+  
   return(
     <div>
       <Link to="/">LP</Link>
       <h1>HOME</h1>
-      <button onClick={e => handleClick(e)}>
-        Boton
-      </button>
       <div>
-        <select onChange={(e) => orderAlph(e)}>
-          <option>Alphabetic</option>
-          <option value="ASC">A-Z</option>
-          <option value="DESC">Z-A</option>
+        <select onChange={(e) => handleOrder(e)}>
+          <option value="ASC">Upward</option>
+          <option value="DESC">Downward</option>
         </select>
-        <select onChange={(e) => orderPop(e)}>
-          <option>Population</option>
-          <option value="ASC">0-N</option>
-          <option value="DESC">N-0</option>
+        <select onChange={(e) => handleOrderBy(e)}>
+          <option value="name">Alphabetic</option>
+          <option value="population">Population</option>
         </select>
-        <select>
-          <option>Continent</option>
+        <select onChange={(e) => selectCont(e)}>
+          <option value="">Continent</option>
           <option value="Africa">Africa</option>
-          <option value="America">America</option>
+          <option value="Antarctica">Antarctica</option>
+          <option value="North America">North/Central America</option>
+          <option value="South America">South America</option>
           <option value="Asia">Asia</option>
           <option value="Europe">Europe</option>
           <option value="Oceania">Oceania</option>
         </select>
+        <input type="text" placeholder='Search Country' value={name} onChange={(e) => filterName(e)}/>
         <div>
           {
             allCountries && allCountries.map(e => {
               return(
-                <fragment>
-                  <Link to={`/home/${e.id}`}>
-                    <Cards name={e.name} continent={e.continent} img={e.img} population={e.population} key={e.id}/>
-                    <button onClick={detalle}></button>
-                  </Link>
-                </fragment>
+                <Link to={`/home/${e.id}`}>
+                  <Cards name={e.name} continent={e.continent} img={e.img} population={e.population} key={e.id}/>
+                </Link>
               )
             })
           }
         </div>
     </div>
       <button onClick={(e) => {prev(e)}} disabled={page <= 0}>PREV</button>
-      <button onClick={(e) => {next(e)}} disabled={page >= 240}>NEXT</button>
+      <button onClick={(e) => {next(e)}} disabled={page >= 240 || allCountries.length < 10}>NEXT</button>
     </div>
   )
 }
+
+// useEffect(() => {
+  //   dispatch(getCountriesAlp(orderByAlp, page)) //mapDispatchToProps
+  // },[dispatch, orderByAlp, page])
+
+  // useEffect(() => {
+  //   dispatch(getCountriesPop(orderByPop, page))
+  // },[dispatch, orderByPop, page])
+
+  // useEffect(() => {
+  //   dispatch(getCountriesContA(continent, orderByAlp, page))
+  // },[dispatch, continent, orderByAlp, page])
+
+  // useEffect(() => {
+  //   dispatch(getCountriesContP(continent, orderByPop, page))
+  // },[dispatch, continent, orderByPop, page])
+
+  
+  // const orderAlph = (e) => {
+  //   e.preventDefault();
+  //   setAlp(e.target.value);
+  // }
+
+  // const orderPop = (e) => {
+  //   e.preventDefault();
+  //   setPop(e.target.value);
+  // }
+
+  // import { getCountriesAlp, getCountriesPop, getDetails, getCountriesContA, getCountriesContP, getCountries } from "../actions";
+
+  // const countryById = (e) => {
+  //   e.preventDefault();
+  //   getCountryById(e.id)
+  // }
+  
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  // }

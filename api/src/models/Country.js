@@ -40,7 +40,9 @@ module.exports = (sequelize) => {
     },
   },
   {
-    timestamps: false
+    timestamps: false,
+    createdAt: false,
+    updatedAt: false
   });
 };
 

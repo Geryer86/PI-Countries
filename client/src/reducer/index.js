@@ -1,23 +1,32 @@
 const initialState = {
-  countries: [],
   allCountries: [],
   activities: [],
-  details: []
+  country: []
 }
 
 function rootReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case "GET_COUNTRIES":
       return {
         ...state,
-        allCountries: action.payload
+        allCountries: action.payload,
       }
-      case "GET_DETAILS":
-        return {
-          ...state,
-          details: action.payload
-        }
-      default: return state;
+    case "GET_COUNTRY_ID":
+      return {
+        ...state,
+        country: action.payload
+      }
+    case "GET_COUNTRY_NAME":
+      return {
+        ...state,
+        country: action.payload
+      }
+    case "GET_ACTIVITIES":
+      return {
+        ...state,
+        activities: action.payload
+      }
+    default: return state;
   }
 }
 

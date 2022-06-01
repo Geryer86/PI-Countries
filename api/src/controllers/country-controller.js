@@ -1,84 +1,73 @@
 const { Country, Activity } = require('../db')
 const { Router } = require('express');
 const router = Router();
-const axios = require('axios');
 const { Op } = require('sequelize')
 
 
 router.get('/', async (req, res, next) => {
-  const { name, page, filter } = req.query;
+  const { page, orderBy, order, continent, name } = req.query;
   try {
-    // const allCountries = await Country.findAll();
-    // const allCountries = (await axios('https://restcountries.com/v3/all')).data.map(e => ({
-    //   id: e.ccn3,
-    //   name: e.name.common,
-    //   image: e.flags[0],
-    //   continent: e.continents[0],
-    //   capital: e.capital || ["Has no capital"],
-    //   subRegion: e.subregion || "Does not have",
-    //   area: e.area,
-    //   population: e.population
-    // }));
-    if (name) {
-      const countryByName = await Country.findAll({
+    if (name && continent) {
+      const countries = await Country.findAll({
         where: {
-          name: {[Op.iLike]: `%${name}%`}
+          name: { [Op.iLike]: `${name}%` },
+          continent: continent
         },
         limit: 10,
         offset: page,
-        order: [[req.query.order]],
+        order: [[orderBy, order]],
         include: Activity
       })
-      console.log("Country by NAME");
-      res.send(countryByName);
-      // const countryByName = await allCountries.filter(e => e.name.toLowerCase().includes(name.toLocaleLowerCase()));
-      // if (countryByName.length) {
-      //   res.json(countryByName);
-      //   console.log("Country by NAME");
-      // } else {
-      //   res.send("Country does not exist (yet)")
-      // }
-    } else if(filter) {
-      const countriesQueryFilter = await Country.findAll({
-        where: {
-          status: filter
-        },
-        limit: 10,
-        offset: page,
-        order: [[req.query.orderBy, req.query.order]],
-        include: Activity
-      })
-      res.json(countriesQueryFilter)
-      console.log("Country by queryfilter")
-    } else {
-      const allTenCountries = await Country.findAll({
-        limit: 10,
-        offset: page,
-        order: [["name", req.query.order]],
-        //order: [[req.query.orderBy, req.query.order]],
-        include: Activity
-      })
-      res.json(allTenCountries)
-      console.log("All countries");
+      res.json(countries)
     }
-  } catch (error) {
-    next(error);
+    if (name) {
+      const countries = await Country.findAll({
+        where: {
+          name: { [Op.iLike]: `${name}%` },
+        },
+        limit: 10,
+        offset: page,
+        order: [[orderBy, order]],
+        include: Activity
+      })
+      res.json(countries)
+    }
+    if (continent) {
+      const countries = await Country.findAll({
+        where: {
+          continent: continent
+        },
+        limit: 10,
+        offset: page,
+        order: [[orderBy, order]],
+        include: Activity
+      })
+      res.json(countries)
+    } else {
+      const countries = await Country.findAll({
+        limit: 10,
+        offset: page,
+        order: [[orderBy, order]],
+        include: Activity
+      })
+      res.json(countries)
+    }
   }
-});
+  catch (error) {
+    next(error)
+  }
+})
 
 router.get('/:id', async (req, res, next) => {
-  const idCountry = req.params.id;
-  const idCountryM = idCountry.toUpperCase()
   try {
     const country = await Country.findOne({
-      where: { 
-        id: idCountryM
+      where: {
+        id: req.params.id
       },
       include: Activity
     });
     if (country) {
       res.status(200).json(country)
-      console.log("Country by ID")
     }
     else res.status(400).send('ID does not match')
   } catch (err) {
@@ -87,3 +76,87 @@ router.get('/:id', async (req, res, next) => {
 });
 
 module.exports = router;
+
+
+//const idCountry = req.params.id;
+//const idCountryM = idCountry.toUpperCase()
+
+// router.get('/', async (req, res, next) => {
+//   const { page, orderBy, order, continent } = req.query;
+//   try {
+//     if (continent) {
+//       if (orderByAlp) {
+//         const countriesContA = await Country.findAll({
+//           where: {
+//             continent: continent
+//           },
+//           limit: 10,
+//           offset: page,
+//           order: [["name", orderByAlp]],
+//           include: Activity
+//         })
+//         res.json(countriesContA)
+//       } else if (orderByPop) {
+//         const countriesContP = await Country.findAll({
+//           where: {
+//             continent: continent
+//           },
+//           limit: 10,
+//           offset: page,
+//           order: [["population", orderByPop]],
+//           include: Activity
+//         })
+//         res.json(countriesContP)
+//       }
+//     } else if (orderByAlp) {
+//       const countriesAlp = await Country.findAll({
+//         limit: 10,
+//         offset: page,
+//         order: [["name", orderByAlp]],
+//         include: Activity
+//       })
+//       res.json(countriesAlp)
+//     } else if (orderByPop) {
+//       const countriesPop = await Country.findAll({
+//         limit: 10,
+//         offset: page,
+//         order: [["population", orderByPop]],
+//         include: Activity
+//       })
+//       res.json(countriesPop)
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+// if (activities) {
+//   const countriesAct = await Country.findAll({
+//     where: {
+//       Activity: activities
+//     },
+//     limit: 10,
+//     offset: page,
+//     order: [[orderBy, order]],
+//   })
+//   res.json(countriesAct)
+// }
+
+// router.get("/search/:name", async (req, res, next) => {
+//   const nameSearch = req.params.name
+//   try {
+//     const countryByName = await Country.findAll({       // const countryByName = await allCountries.filter(e => e.name.toLowerCase().includes(name.toLocaleLowerCase()));
+//       where: {
+//         name: {
+//           [Op.iLike]: `%${nameSearch}%`
+//         }
+//       },
+//       limit: 10,
+//       order: [["name", "ASC"]],
+//       include: Activity
+//     })
+//     res.send(countryByName);
+//   } catch (error) {
+//     next(error)
+//   }
+// })

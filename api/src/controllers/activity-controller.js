@@ -6,42 +6,36 @@ const { Op } = require('sequelize');
 const getActivity = require('../functions/getActivities')
 
 router.post('/', async (req, res, next) => {
-  const { name, difficulty, duration, season, countryID } = req.body
+  const { name, difficulty, duration, season, countries } = req.body
   try {
-    if (name && difficulty && duration && season && countryID) {
-      
-      // const newActivity = await Activity.create({
-      //   name, difficulty, duration, season
-      // })
-
+    if (name && difficulty && duration && season && countries) {
       const [newActivity, created] = await Activity.findOrCreate({
-        where:{
-            name: name,
-            difficulty: difficulty,
-            duration: duration,
-            season: season,
+        where: {
+          name: name,
+          difficulty: difficulty,
+          duration: duration,
+          season: season
         },
         include: [{
           model: Country,
-          where: { id: countryID }
-      }]
-    })
-
+          where: {
+            name: countries
+          }
+        }]
+      })
       const countryFind = await Country.findAll({
         where: {
-          id: {
-            [Op.or]: countryID
+          name: {
+            [Op.or]: countries
           }
         }
       })
-      
       await newActivity.addCountries(countryFind)
-      
-      // await countryFind.forEach((e) => {
-      //   return newActivity.addCountry(e.countryFind) //e.dataValues.id
-      // });
-      
-      res.status(201).send(newActivity)
+      if (!created) {
+        console.log("YA EXISTE")
+        res.status(400).send("LA ACTIVIDAD YA EXISTE EN ALGUNO DE LOS PAISES SELECCIONADOS")
+      } else res.status(201).send(newActivity)
+        console.log("CREADA")
     } else res.status(404).json("Missing data")
   } catch (err) {
     next(err)
@@ -53,6 +47,7 @@ router.get("/", async (req, res, next) => {
   try {
     const activities = await getActivity(name)
     res.send(activities)
+    console.log("DAVID")
   } catch (error) {
     console.log("No anduvo")
     next(error)
