@@ -5,29 +5,29 @@ const { Op } = require('sequelize')
 
 
 router.get('/', async (req, res, next) => {
-  const { page, orderBy, order, continent, name } = req.query;
+  const { page, sort, order, continent, name } = req.query;
   try {
     if (name && continent) {
       const countries = await Country.findAll({
         where: {
           name: { [Op.iLike]: `${name}%` },
-          continent: continent
+          continent: continent,
         },
         limit: 10,
         offset: page,
-        order: [[orderBy, order]],
+        //order: [[sort, order]],
         include: Activity
       })
       res.json(countries)
     }
-    if (name) {
+    if (name && name.length > 1) {
       const countries = await Country.findAll({
         where: {
           name: { [Op.iLike]: `${name}%` },
         },
         limit: 10,
         offset: page,
-        order: [[orderBy, order]],
+        //order: [[sort, order]],
         include: Activity
       })
       res.json(countries)
@@ -39,21 +39,43 @@ router.get('/', async (req, res, next) => {
         },
         limit: 10,
         offset: page,
-        order: [[orderBy, order]],
+        order: [[sort, order]],
+        include: Activity
+      })
+      res.json(countries)
+    } else if (sort && order) {
+      const countries = await Country.findAll({
+        where: {
+          name: { [Op.iLike]: `${name}%` },
+        },
+        limit: 10,
+        offset: page,
+        order: [[sort, order]],
+        include: Activity
+      })
+      res.json(countries)
+    } else if (page < 1) {
+      const countries = await Country.findAll({
+        limit: 9,
+        offset: page,
+        include: Activity
+      })
+      res.json(countries)
+    } else if (page > 0 && page < 249) {
+      const countries = await Country.findAll({
+        limit: 10,
+        offset: page,
         include: Activity
       })
       res.json(countries)
     } else {
       const countries = await Country.findAll({
-        limit: 10,
         offset: page,
-        order: [[orderBy, order]],
         include: Activity
       })
       res.json(countries)
     }
-  }
-  catch (error) {
+  } catch (error) {
     next(error)
   }
 })

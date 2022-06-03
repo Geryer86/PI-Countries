@@ -11,14 +11,14 @@ export default function Home() {
   const allCountries = useSelector(state => state.allCountries) //mapStateToProps
   
   const [page, setPage] = useState(0)
-  const [order, setOrder] = useState("ASC")
-  const [orderBy, setOrderBy] = useState("name")
+  const [order, setOrder] = useState()
+  const [sort, setSort] = useState("")
   const [continent, setCont] = useState("")
   const [name, setName] = useState("")
   
   useEffect(() => {
-    dispatch(getCountries(orderBy, order, page, continent, name))
-  }, [dispatch, orderBy, order, page, continent, name])
+    dispatch(getCountries(sort, order, page, continent, name))
+  }, [dispatch, sort, order, page, continent, name])
 
   const prev = (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export default function Home() {
 
   const next = (e) => {
     e.preventDefault();
-    if(allCountries.length - 10) {
+    if(allCountries.length < 9) {
       return;
     } else {
       setPage(page + 10)
@@ -43,9 +43,9 @@ export default function Home() {
     setOrder(e.target.value)
   }
 
-  const handleOrderBy = (e) => {
+  const handleSort = (e) => {
     e.preventDefault();
-    setOrderBy(e.target.value)
+    setSort(e.target.value)
   }
 
   const selectCont = (e) => {
@@ -60,19 +60,21 @@ export default function Home() {
   
   return(
     <div>
-      <Link to="/">LP</Link>
-      <h1>HOME</h1>
+      <Link to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/e/ef/Erioll_world_2.svg' width="50px"></img></Link>
+      <h1>...the World!</h1>
       <div>
         <select onChange={(e) => handleOrder(e)}>
+          <option disabled={order}>Order</option>
           <option value="ASC">Upward</option>
           <option value="DESC">Downward</option>
         </select>
-        <select onChange={(e) => handleOrderBy(e)}>
+        <select onChange={(e) => handleSort(e)}>
+          <option disabled={sort}>By</option>
           <option value="name">Alphabetic</option>
           <option value="population">Population</option>
         </select>
         <select onChange={(e) => selectCont(e)}>
-          <option value="">Continent</option>
+          <option value="">All the world</option>
           <option value="Africa">Africa</option>
           <option value="Antarctica">Antarctica</option>
           <option value="North America">North/Central America</option>
@@ -81,10 +83,15 @@ export default function Home() {
           <option value="Europe">Europe</option>
           <option value="Oceania">Oceania</option>
         </select>
-        <input type="text" placeholder='Search Country' value={name} onChange={(e) => filterName(e)}/>
+        <input type="text" placeholder='Search country' value={name} onChange={(e) => filterName(e)}/>
         <div>
+        <div>
+        <Link to="/activities">
+          <button>Go to activities</button>
+        </Link>
+        </div>
           {
-            allCountries && allCountries.map(e => {
+            allCountries?.map(e => {
               return(
                 <Link to={`/home/${e.id}`}>
                   <Cards name={e.name} continent={e.continent} img={e.img} population={e.population} key={e.id}/>
@@ -93,9 +100,9 @@ export default function Home() {
             })
           }
         </div>
-    </div>
+      </div>
       <button onClick={(e) => {prev(e)}} disabled={page <= 0}>PREV</button>
-      <button onClick={(e) => {next(e)}} disabled={page >= 240 || allCountries.length < 10}>NEXT</button>
+      <button onClick={(e) => {next(e)}} disabled={page >= 240 || allCountries.length < 9}>NEXT</button>
     </div>
   )
 }

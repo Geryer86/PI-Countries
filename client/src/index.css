@@ -1,5 +1,7 @@
 body {
-  background-image: url('https://www.fundacionaquae.org/wp-content/uploads/2016/01/bolamundo-1024x683.jpg.webp');
+  background-image: url('https://www.worldexcellence.com/wp-content/uploads/2019/06/world-excellence-le-fonti.jpg');
+  background-size: cover;
+  size: 1080px;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -12,3 +14,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* https://images.squarespace-cdn.com/content/v1/60e6341f017575363ab46dbc/1627357208379-MVVT1Q1MZXUAFYOFJ3W3/placeholder-world.png?format=2500w */
+/* https://www.worldexcellence.com/wp-content/uploads/2019/06/world-excellence-le-fonti.jpg */
+/* https://www.nationsonline.org/maps/Political-World-Map-3360.jpg */
+/* https://www.thoughtco.com/thmb/IxJUppm1UaJGoTMLjC54-clZpc8=/4961x2791/smart/filters:no_upscale()/world-in-geographic-projection-true-colour-satellite-image-99151124-58b9cc3e5f9b58af5ca7578d.jpg */

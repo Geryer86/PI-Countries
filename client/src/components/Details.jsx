@@ -4,20 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCountryById } from "../actions";
 import Card from "./Card";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 
 export default function Details() {
   const dispatch = useDispatch()
   let { id } = useParams()
   const country = useSelector(state => state.country)
-  //const [id, setId] = useState(id)
-  
+
   useEffect(() => {
     dispatch(getCountryById(id))
-  },[dispatch], id)
+  }, [dispatch, id])
 
-  return(
+  return (
     <div>
+      Country details
       <Card
         name={country.name}
         area={country.area}
@@ -28,6 +29,9 @@ export default function Details() {
         activities={country.activities}
         key={country.id}
       />
+      <Link to="/home">
+        <button>Back</button>
+      </Link>
     </div>
   )
 }

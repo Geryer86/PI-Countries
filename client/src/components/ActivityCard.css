@@ -1,0 +1,9 @@
+.actcards {
+  display:inline-flex;
+  right: 50px;
+}
+
+.actcards1 {
+  display: table-footer-group;
+}
+

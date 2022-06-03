@@ -8,3 +8,11 @@
   size: 50px;
 }
 
+.little {
+  color: black;
+}
+
+.little:hover {
+  size: 80px;
+}
+

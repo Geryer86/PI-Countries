@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
         console.log("YA EXISTE")
         res.status(400).send("LA ACTIVIDAD YA EXISTE EN ALGUNO DE LOS PAISES SELECCIONADOS")
       } else res.status(201).send(newActivity)
-        console.log("CREADA")
+      console.log("CREADA")
     } else res.status(404).json("Missing data")
   } catch (err) {
     next(err)
@@ -47,7 +47,7 @@ router.get("/", async (req, res, next) => {
   try {
     const activities = await getActivity(name)
     res.send(activities)
-    console.log("DAVID")
+    console.log(activities)
   } catch (error) {
     console.log("No anduvo")
     next(error)
@@ -55,3 +55,11 @@ router.get("/", async (req, res, next) => {
 })
 
 module.exports = router;
+
+/* {
+    "name": "Correr",
+    "difficulty": "1",
+    "duration": 2,
+    "season": "Summer",
+    "countries": ["Albania", "Argentina"]
+ } */

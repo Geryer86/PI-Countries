@@ -1,9 +1,23 @@
 import axios from 'axios';
 
-export function getCountries(orderBy, order, page, continent, name) {
+export function getApi() {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/countries?orderBy=${orderBy}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
+      const json = await axios.get(`http://localhost:3001/countries`)
+      return dispatch({
+        type: "GET_API",
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getCountries(sort, order, page, continent, name) {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`http://localhost:3001/countries?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
       return dispatch({
         type: "GET_COUNTRIES",
         payload: json.data

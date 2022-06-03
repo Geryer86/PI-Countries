@@ -7,32 +7,32 @@ import ActivityCard from "./ActivityCard";
 
 export default function Activities() {
   const dispatch = useDispatch()
-  const allActivities = useSelector(state => state.activities) //mapStateToProps
+  const allActivities = useSelector(state => state.activities)
   const [name, setName] = useState()
 
   useEffect(() => {
-    dispatch(getActivities(name)) //mapDispatchToProps
-  },[dispatch, name])
+    dispatch(getActivities(name))
+  }, [dispatch, name])
 
-  return(
+  return (
     <div>
-      Activities
-      <div>
-        <select>
-          <option>Name</option>
-        </select>
-      </div>
-    {
-      allActivities && allActivities.map(e => {
-        return(
-          <fragment>
-            <Link>
-              <ActivityCard name={e.name} season={e.season}/>
-            </Link>
-          </fragment>
-        )
-      })
-    }
+      <input type="text" placeholder='Search activity' value={name} onChange={(e) => setName(e.target.value)} />
+      {
+        allActivities?.map(e => {
+          return (
+            <ActivityCard
+              name={e.name}
+              difficulty={e.difficulty}
+              duration={e.duration}
+              season={e.season}
+              countries={e.countries}
+            />
+          )
+        })
+      }
+      <Link to="/home">
+        <button>Back</button>
+      </Link>
     </div>
   )
 }
