@@ -24,13 +24,13 @@ module.exports = (sequelize) => {
         values: ["Summer", "Autumn", "Spring", "Winter"]
       })
     },
-    id: {
-      type: DataTypes.INTEGER,
-      //defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-      unique: true,
-      //allowNull: false,
-    }
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   //defaultValue: DataTypes.UUIDV4,
+    //   primaryKey: true,
+    //   unique: true,
+    //   //allowNull: false,
+    // }
   },
   {
     timestamps: false,

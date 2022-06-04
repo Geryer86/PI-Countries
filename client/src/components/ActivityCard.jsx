@@ -42,7 +42,6 @@ export default function ActivityCard({ name, difficulty, duration, season }) {
           })
         }
         </div>
-      
     </div>
   );
 }

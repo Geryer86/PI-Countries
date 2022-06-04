@@ -16,6 +16,11 @@ export default function Activities() {
 
   return (
     <div>
+      <div>
+        <Link to="/activities/createActivity">
+          <button>Create Activity</button>
+        </Link>
+      </div>
       <input type="text" placeholder='Search activity' value={name} onChange={(e) => setName(e.target.value)} />
       {
         allActivities?.map(e => {
