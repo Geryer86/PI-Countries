@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getApi, activityCreate } from '../actions';
+import { getApi, activityCreate, getActivities } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-export default function ActivityCreate() {
+export default function ActivityCreate({ name, difficulty, duration, season }) {
   const dispatch = useDispatch()
   const countries = useSelector((state) => state.api);
+  //const act = useSelector((state) => state.activities)
+  //const arr = act.filter(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season) && (c.countries.find(e => e.name === countries.name)))
   
   const [activity, setActivity] = useState({
     name: "",
@@ -15,6 +17,10 @@ export default function ActivityCreate() {
     season: "",
     countries: []
   })
+
+  // useEffect(() => {
+  //   dispatch(getActivities(name))
+  // }, [dispatch, name])
 
   useEffect(() => {
     dispatch(getApi());
@@ -57,20 +63,40 @@ export default function ActivityCreate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //console.log(arr)
+    // if(arr.length) {
+    //   return alert("Error")
+    // }
+    if(!activity.countries.length) {
+      alert("You must choose a country")
+    }
+    else if(!activity.name) {
+      alert("You must write a name for the activity")
+    }
+    else if(!activity.difficulty) {
+      alert("You must set the difficulty for the activity")
+    }
+    else if(!activity.season) {
+      alert("You must select the season")
+    }
+    else {
     dispatch(activityCreate(activity))
     alert("Activity created")
+    console.log(activity)
+    //console.log(act)
     setActivity({
       name: "",
       difficulty: 0,
       duration: 0,
       season: "",
       countries: []
-    }) // history.push('/home');
+    })
+   } // history.push('/home');
   }
 
   return (
     <div>
-      <Link to="/home">
+      <Link to="/activities">
         <button>Back</button>
       </Link>
       <div>
@@ -82,6 +108,7 @@ export default function ActivityCreate() {
           <label>Difficulty</label>
           <br/>
           <select onChange={e => handleDifficulty(e)}>
+            <option>Select difficulty</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -91,11 +118,12 @@ export default function ActivityCreate() {
           <br/>
           <label>Duration</label>
           <br/>
-          <input name='duration' type="number" value={activity.duration} onChange={e => handleChange(e)}/>
+          <input name='duration' type="number" min={1} max={24} value={activity.duration} onChange={(e) => handleChange(e)}/>
           <br/>
           <label>Season</label>
           <br/>
           <select onChange={e => handleSeason(e)}>
+            <option>Select season</option>
             <option value="Spring">Spring</option>
             <option value="Summer">Summer</option>
             <option value="Autumn">Autumn</option>
@@ -106,6 +134,7 @@ export default function ActivityCreate() {
           <label>Countries</label>
           <br/>
           <select onChange={(e) => handleSelect(e)}>
+            <option disabled={countries.length}>Select countries</option>
             {
               countries?.map((e) => <option value={e.name}>{e.name}</option>)
             }

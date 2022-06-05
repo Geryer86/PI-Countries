@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getActivities } from "../actions";
 import { Link } from "react-router-dom";
 import ActivityCard from "./ActivityCard";
+import SearchBar from "./SearchBar";
 
 export default function Activities() {
   const dispatch = useDispatch()
@@ -21,7 +22,9 @@ export default function Activities() {
           <button>Create Activity</button>
         </Link>
       </div>
-      <input type="text" placeholder='Search activity' value={name} onChange={(e) => setName(e.target.value)} />
+      <div>
+        <input type="text" placeholder='Search activity' value={name} onChange={(e) => setName(e.target.value)}/>
+      </div>
       {
         allActivities?.map(e => {
           return (
@@ -35,9 +38,11 @@ export default function Activities() {
           )
         })
       }
-      <Link to="/home">
-        <button>Back</button>
-      </Link>
+      <div>
+        <Link to="/home">
+          <button>Back to home</button>
+        </Link>
+      </div>
     </div>
   )
 }

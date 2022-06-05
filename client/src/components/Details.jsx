@@ -5,6 +5,7 @@ import { getCountryById } from "../actions";
 import Card from "./Card";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import "./styles/Details.css"
 
 
 export default function Details() {
@@ -18,20 +19,26 @@ export default function Details() {
 
   return (
     <div>
+      <div className="title">
       Country details
-      <Card
-        name={country.name}
-        area={country.area}
-        continent={country.continent}
-        capital={country.capital}
-        population={country.population}
-        img={country.img}
-        activities={country.activities}
-        key={country.id}
-      />
-      <Link to="/home">
-        <button>Back</button>
-      </Link>
+      </div>
+      <div className="card">
+        <Card
+          name={country.name}
+          area={country.area}
+          continent={country.continent}
+          capital={country.capital}
+          population={country.population}
+          img={country.img}
+          activities={country.activities}
+          key={country.id}
+        />
+      </div>
+      <div>
+        <Link to="/home">
+          <button>Back</button>
+        </Link>
+      </div>
     </div>
   )
 }

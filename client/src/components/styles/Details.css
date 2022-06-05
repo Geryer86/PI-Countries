@@ -1,0 +1,14 @@
+.title {
+  color: black;
+  background-color: rgb(127, 255, 212, 0.25);
+}
+
+.card {
+  font-family:Arial, Helvetica, sans-serif;
+  background-color: rgba(114, 168, 234, 0.218);
+  color: black;
+  text-decoration: solid;
+  text-decoration-color: rgb(216, 14, 14);
+  display: grid;
+}
+

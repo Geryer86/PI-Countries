@@ -1,4 +1,4 @@
-import './Home.css'
+import './styles/Home.css'
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import Cards from "./Cards";
 export default function Home() {
   const dispatch = useDispatch()
   const allCountries = useSelector(state => state.allCountries) //mapStateToProps
+  //const api = useSelector(state => state.api)
   
   const [page, setPage] = useState(0)
   const [order, setOrder] = useState()
@@ -26,16 +27,18 @@ export default function Home() {
       setPage(0);
     } else {
       setPage(page - 10)
+      console.log(page)
     }
   }
 
   const next = (e) => {
-    e.preventDefault();
-    if(allCountries.length < 9) {
-      return;
-    } else {
+    //e.preventDefault();
+    // if(allCountries.length < 9) {
+    //   return;
+    // } else {
       setPage(page + 10)
-    }
+      console.log(page)
+    //}
   }
 
   const handleOrder = (e) => {
@@ -57,11 +60,16 @@ export default function Home() {
     e.preventDefault();
     setName(e.target.value)
   }
+
+  const handlePage = (e) => {
+    e.preventDefault();
+    setPage(e.target.value)
+  }
   
   return(
     <div>
       <Link to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/e/ef/Erioll_world_2.svg' width="50px"></img></Link>
-      <h1>...the World!</h1>
+      <h1 className='world'>...the World!</h1>
       <div>
         <select onChange={(e) => handleOrder(e)}>
           <option disabled={order}>Order</option>
@@ -101,13 +109,42 @@ export default function Home() {
           }
         </div>
       </div>
+      
       <button onClick={(e) => {prev(e)}} disabled={page <= 0}>PREV</button>
+
+      <button onClick={(e) => {handlePage(e)}} value={0} hidden={page >= 40}>1</button>
+      <button onClick={(e) => {handlePage(e)}} value={10} hidden={page >= 50 || allCountries.length < 9}>2</button>
+      <button onClick={(e) => {handlePage(e)}} value={20} hidden={page >= 60 || allCountries.length < 9}>3</button>
+      <button onClick={(e) => {handlePage(e)}} value={30} hidden={page >= 70 || allCountries.length < 9}>4</button>
+      <button onClick={(e) => {handlePage(e)}} value={40} hidden={page >= 80 || allCountries.length < 9}>5</button>
+      <button onClick={(e) => {handlePage(e)}} value={50} hidden={page < 40 || page >=90 || allCountries.length < 9}>6</button>
+      <button onClick={(e) => {handlePage(e)}} value={60} hidden={page < 50 || page >=100 || allCountries.length < 9}>7</button>
+      <button onClick={(e) => {handlePage(e)}} value={70} hidden={page < 60 || page >=110 || allCountries.length < 9}>8</button>
+      <button onClick={(e) => {handlePage(e)}} value={80} hidden={page < 70 || page >=120 || allCountries.length < 9}>9</button>
+      <button onClick={(e) => {handlePage(e)}} value={90} hidden={page < 80 || page >=130 || allCountries.length < 9}>10</button>
+      <button onClick={(e) => {handlePage(e)}} value={100} hidden={page < 90 || page >=140 || allCountries.length < 9}>11</button>
+      <button onClick={(e) => {handlePage(e)}} value={110} hidden={page < 100 || page >=150 || allCountries.length < 9}>12</button>
+      <button onClick={(e) => {handlePage(e)}} value={120} hidden={page < 110 || page >=160 || allCountries.length < 9}>13</button>
+      <button onClick={(e) => {handlePage(e)}} value={130} hidden={page < 120 || page >=170 || allCountries.length < 9}>14</button>
+      <button onClick={(e) => {handlePage(e)}} value={140} hidden={page < 130 || page >=180 || allCountries.length < 9}>15</button>
+      <button onClick={(e) => {handlePage(e)}} value={150} hidden={page < 140 || page >=190 || allCountries.length < 9}>16</button>
+      <button onClick={(e) => {handlePage(e)}} value={160} hidden={page < 150 || page >=200 || allCountries.length < 9}>17</button>
+      <button onClick={(e) => {handlePage(e)}} value={170} hidden={page < 160 || page >=210 || allCountries.length < 9}>18</button>
+      <button onClick={(e) => {handlePage(e)}} value={180} hidden={page < 170 || page >=220 || allCountries.length < 9}>19</button>
+      <button onClick={(e) => {handlePage(e)}} value={190} hidden={page < 180 || page >=230 || allCountries.length < 9}>20</button>
+      <button onClick={(e) => {handlePage(e)}} value={200} hidden={page < 190 || allCountries.length < 9}>21</button>
+      <button onClick={(e) => {handlePage(e)}} value={210} hidden={page < 200 || allCountries.length < 9}>22</button>
+      <button onClick={(e) => {handlePage(e)}} value={220} hidden={page < 210 || allCountries.length < 9}>23</button>
+      <button onClick={(e) => {handlePage(e)}} value={230} hidden={page < 220 || allCountries.length < 9}>24</button>
+      <button onClick={(e) => {handlePage(e)}} value={240} hidden={page < 230 || allCountries.length < 9}>25</button>
+
       <button onClick={(e) => {next(e)}} disabled={page >= 240 || allCountries.length < 9}>NEXT</button>
+
     </div>
   )
 }
 
-// useEffect(() => {
+  // useEffect(() => {
   //   dispatch(getCountriesAlp(orderByAlp, page)) //mapDispatchToProps
   // },[dispatch, orderByAlp, page])
 
@@ -144,3 +181,34 @@ export default function Home() {
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   // }
+
+  // const handlePage = (e) => {
+  //   e.preventDefault();
+  //   setPage(e.target.value)
+  // }
+  
+  // <button onClick={(e) => {handlePage(e)}} value={0} hidden={page >= 40}>1</button>
+  // <button onClick={(e) => {handlePage(e)}} value={10} hidden={page >= 50}>2</button>
+  // <button onClick={(e) => {handlePage(e)}} value={20} hidden={page >= 60}>3</button>
+  // <button onClick={(e) => {handlePage(e)}} value={30} hidden={page >= 70}>4</button>
+  // <button onClick={(e) => {handlePage(e)}} value={40} hidden={page >= 80}>5</button>
+  // <button onClick={(e) => {handlePage(e)}} value={50} hidden={page < 40 || page >=90}>6</button>
+  // <button onClick={(e) => {handlePage(e)}} value={60} hidden={page < 50 || page >=100}>7</button>
+  // <button onClick={(e) => {handlePage(e)}} value={70} hidden={page < 60 || page >=110}>8</button>
+  // <button onClick={(e) => {handlePage(e)}} value={80} hidden={page < 70 || page >=120}>9</button>
+  // <button onClick={(e) => {handlePage(e)}} value={90} hidden={page < 80 || page >=130}>10</button>
+  // <button onClick={(e) => {handlePage(e)}} value={100} hidden={page < 90 || page >=140}>11</button>
+  // <button onClick={(e) => {handlePage(e)}} value={110} hidden={page < 100 || page >=150}>12</button>
+  // <button onClick={(e) => {handlePage(e)}} value={120} hidden={page < 110 || page >=160}>13</button>
+  // <button onClick={(e) => {handlePage(e)}} value={130} hidden={page < 120 || page >=170}>14</button>
+  // <button onClick={(e) => {handlePage(e)}} value={140} hidden={page < 130 || page >=180}>15</button>
+  // <button onClick={(e) => {handlePage(e)}} value={150} hidden={page < 140 || page >=190}>16</button>
+  // <button onClick={(e) => {handlePage(e)}} value={160} hidden={page < 150 || page >=200}>17</button>
+  // <button onClick={(e) => {handlePage(e)}} value={170} hidden={page < 160 || page >=210}>18</button>
+  // <button onClick={(e) => {handlePage(e)}} value={180} hidden={page < 170 || page >=220}>19</button>
+  // <button onClick={(e) => {handlePage(e)}} value={190} hidden={page < 180 || page >=230}>20</button>
+  // <button onClick={(e) => {handlePage(e)}} value={200} hidden={page < 190}>21</button>
+  // <button onClick={(e) => {handlePage(e)}} value={210} hidden={page < 200}>22</button>
+  // <button onClick={(e) => {handlePage(e)}} value={220} hidden={page < 210}>23</button>
+  // <button onClick={(e) => {handlePage(e)}} value={230} hidden={page < 220}>24</button>
+  // <button onClick={(e) => {handlePage(e)}} value={240} hidden={page < 230}>25</button>

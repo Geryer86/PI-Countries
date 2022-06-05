@@ -2,7 +2,7 @@ const { Activity, Country } = require('../db')
 const { Op } = require("sequelize");
 
 async function getActivity(name) {
-  if (name) {
+  //if (name) {
     const activities = Activity.findAll({
       include: [{
         model: Country,
@@ -18,18 +18,19 @@ async function getActivity(name) {
       },
     });
     return activities
-  } else {
-    const activities = Activity.findAll({
-      include: [{
-        model: Country,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        }
-      }]
-    })
-    return activities
-  }
+  // } 
+  // else {
+  //   const activities = Activity.findAll({
+  //     include: [{
+  //       model: Country,
+  //       attributes: ["name"],
+  //       through: {
+  //         attributes: [],
+  //       }
+  //     }]
+  //   })
+  //   return activities
+  // }
 };
 
 module.exports = getActivity;

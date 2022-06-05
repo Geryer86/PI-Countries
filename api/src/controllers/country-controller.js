@@ -3,8 +3,18 @@ const { Router } = require('express');
 const router = Router();
 const { Op } = require('sequelize')
 
+router.get("/", async (req, res, next) => {
+  try {
+    const countries = await Country.findAll({
+      include: Activity
+    })
+    res.json(countries)
+  } catch (error) {
+    next(error)
+  }
+})
 
-router.get('/', async (req, res, next) => {
+router.get("/filter", async (req, res, next) => {
   const { page, sort, order, continent, name } = req.query;
   try {
     if (name && continent) {
@@ -15,24 +25,22 @@ router.get('/', async (req, res, next) => {
         },
         limit: 10,
         offset: page,
-        //order: [[sort, order]],
         include: Activity
       })
       res.json(countries)
     }
-    if (name && name.length > 1) {
+    else if (name && name.length > 1) {
       const countries = await Country.findAll({
         where: {
           name: { [Op.iLike]: `${name}%` },
         },
         limit: 10,
         offset: page,
-        //order: [[sort, order]],
         include: Activity
       })
       res.json(countries)
-    }
-    if (continent) {
+    }   
+    else if (continent) {
       const countries = await Country.findAll({
         where: {
           continent: continent
@@ -43,44 +51,37 @@ router.get('/', async (req, res, next) => {
         include: Activity
       })
       res.json(countries)
-    } else if (sort && order) {
+    } 
+    else if (sort && order) {
       const countries = await Country.findAll({
-        where: {
-          name: { [Op.iLike]: `${name}%` },
-        },
         limit: 10,
         offset: page,
         order: [[sort, order]],
         include: Activity
       })
       res.json(countries)
-    } else if (page < 1) {
+    } 
+    else if (page < 1) {
       const countries = await Country.findAll({
         limit: 9,
         offset: page,
         include: Activity
       })
       res.json(countries)
-    } else if (page > 0 && page < 249) {
+    } else if (page > 9 && page < 249) {
       const countries = await Country.findAll({
         limit: 10,
         offset: page,
         include: Activity
       })
       res.json(countries)
-    } else {
-      const countries = await Country.findAll({
-        offset: page,
-        include: Activity
-      })
-      res.json(countries)
-    }
+    } 
   } catch (error) {
     next(error)
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const country = await Country.findOne({
       where: {

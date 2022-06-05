@@ -1,0 +1,22 @@
+.all {
+  display: inline-flex;
+  margin-right: 500px;
+}
+
+.actdetails {
+  color: black;
+  background-color: rgb(7, 7, 241, 0.3);
+  border-radius: 5%;
+  border-style: groove;
+  border-color: black;
+  display: inline-block;
+  margin-right: 400px;
+  margin-bottom: 100px;
+  text-align: justify;
+}
+
+.actcards {
+  border-radius: 5%;
+  display: inline-block;
+}
+

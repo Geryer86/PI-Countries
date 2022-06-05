@@ -17,7 +17,7 @@ export function getApi() {
 export function getCountries(sort, order, page, continent, name) {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/countries?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
+      const json = await axios.get(`http://localhost:3001/countries/filter?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
       return dispatch({
         type: "GET_COUNTRIES",
         payload: json.data

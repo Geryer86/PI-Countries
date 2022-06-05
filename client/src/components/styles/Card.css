@@ -1,0 +1,18 @@
+.card {
+  display:inline-table;
+  font-size: 40px;
+}
+
+.detail {
+  display:inline-table;
+  margin-right: 500px;
+}
+
+.activities {
+  display: inline-table;
+}
+
+.actdet {
+  margin-bottom: 100px;
+}
+

@@ -1,4 +1,4 @@
-import "./ActivityCard.css"
+import "./styles/ActivityCard.css";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,29 +11,29 @@ export default function ActivityCard({ name, difficulty, duration, season }) {
 
   const dispatch = useDispatch()
   const api = useSelector(state => state.api)
-  const arr = api.filter(a => a.activities.find(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season)))
+  //const arr = api.filter(a => a.activities.find(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season)))
+  const arrId = api.filter(a => a.activities.find(c => c.id))
 
   useEffect(() => {
     dispatch(getApi())
   }, [dispatch])
-
-  console.log(api)
+  //console.log(api)
 
   return (
-    <div>
-      <div className="actcards">
+    <div className="all">
+      <div className="actdetails">
       <h3>{name}</h3>
       <h4>Difficulty {difficulty}/5</h4>
       <h4>Duration {duration} hours</h4>
       <h5>{season}</h5>
       </div>
       
-        <div className="actcards1">
+        <div className="actcards">
           <div>
           Countries
           </div>
         {
-          arr?.map(e => {
+          arrId?.map(e => {
             return (
               <Link to={`/home/${e.id}`}>
                 <Cards name={e.name} continent={e.continent} img={e.img} population={e.population} key={e.id}/>
