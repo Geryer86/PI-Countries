@@ -1,0 +1,25 @@
+import React from "react";
+import "./styles/Pagination.css"
+
+export default function Pagination ({countriesPage, api, pagination}) {
+  const pageNums = [];
+
+  for (let i = 0; i < Math.ceil(api/countriesPage); i++) {
+    pageNums.push(i+1)
+  }
+  console.log(pageNums)
+
+  return(
+    <nav>
+      <ul className="pagination">
+        {
+          pageNums?.map(n => (
+            <li>
+              <a onClick={() => pagination(n)}>{n}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  )
+}

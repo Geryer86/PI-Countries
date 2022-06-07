@@ -39,7 +39,7 @@ router.get("/filter", async (req, res, next) => {
         include: Activity
       })
       res.json(countries)
-    }   
+    }  
     else if (continent) {
       const countries = await Country.findAll({
         where: {

@@ -1,0 +1,32 @@
+.pagination{
+  display: inline-block;
+  padding: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pagination li {
+  display: inline;
+}
+
+.pagination a {
+  color: rgb(0, 0, 0);
+  float: left;
+  padding: 8px 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #efb810;
+}
+
+
+.pagination a:hover{
+  background: #000000;
+  color: aliceblue;
+
+
+}

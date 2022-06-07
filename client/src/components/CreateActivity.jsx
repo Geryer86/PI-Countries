@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getApi, activityCreate, getActivities } from '../actions';
+import { getApi, activityCreate } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-export default function ActivityCreate({ name, difficulty, duration, season }) {
+export default function ActivityCreate() {
   const dispatch = useDispatch()
   const countries = useSelector((state) => state.api);
-  //const act = useSelector((state) => state.activities)
-  //const arr = act.filter(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season) && (c.countries.find(e => e.name === countries.name)))
   
   const [activity, setActivity] = useState({
     name: "",
@@ -17,11 +15,7 @@ export default function ActivityCreate({ name, difficulty, duration, season }) {
     season: "",
     countries: []
   })
-
-  // useEffect(() => {
-  //   dispatch(getActivities(name))
-  // }, [dispatch, name])
-
+  
   useEffect(() => {
     dispatch(getApi());
   }, [dispatch]);
@@ -62,13 +56,11 @@ export default function ActivityCreate({ name, difficulty, duration, season }) {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    //console.log(arr)
-    // if(arr.length) {
-    //   return alert("Error")
-    // }
     if(!activity.countries.length) {
       alert("You must choose a country")
+    }
+    else if(typeof activity.name === "integer") {
+      alert("Cannot use numbers")
     }
     else if(!activity.name) {
       alert("You must write a name for the activity")
@@ -83,7 +75,6 @@ export default function ActivityCreate({ name, difficulty, duration, season }) {
     dispatch(activityCreate(activity))
     alert("Activity created")
     console.log(activity)
-    //console.log(act)
     setActivity({
       name: "",
       difficulty: 0,
@@ -134,7 +125,7 @@ export default function ActivityCreate({ name, difficulty, duration, season }) {
           <label>Countries</label>
           <br/>
           <select onChange={(e) => handleSelect(e)}>
-            <option disabled={countries.length}>Select countries</option>
+            <option disabled={activity.countries.length}>Select countries</option>
             {
               countries?.map((e) => <option value={e.name}>{e.name}</option>)
             }
@@ -154,16 +145,10 @@ export default function ActivityCreate({ name, difficulty, duration, season }) {
   )
 }
 
-
-
-
-
-
-
-
-
-
-
+//const act = useSelector((state) => state.activities)
+//const arr = act.filter(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season) && (c.countries.find(e => e.name === countries.name)))
+//const arr = countries.filter(a => a.activities.find(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season)))
+//const arrId = countries.filter(a => a.activities.find(c => c.id))
 
 //const platforms = useSelector((state) => state.platforms);
 //const history = useHistory()

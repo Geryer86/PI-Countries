@@ -21,3 +21,21 @@
   background-color: rgb(255, 255, 255, 0.4);
 }
 
+.sdo {
+  display: flex;
+}
+
+.btns {
+  color: rgb(0, 0, 0);
+  float: center;
+  display: block;
+  padding: 8px 16px;
+  margin-top: 80px;
+  text-decoration: none;
+  font-size: 18px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: hsl(224, 75%, 51%, 0.4);
+}
+

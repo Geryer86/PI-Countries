@@ -7,17 +7,15 @@ import { getApi } from "../actions";
 import { Link } from "react-router-dom";
 
 
-export default function ActivityCard({ name, difficulty, duration, season }) {
+export default function ActivityCard({ name, difficulty, duration, season, id }) {
 
   const dispatch = useDispatch()
   const api = useSelector(state => state.api)
-  //const arr = api.filter(a => a.activities.find(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season)))
-  const arrId = api.filter(a => a.activities.find(c => c.id))
+  const arr = api.filter(a => a.activities.find(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season)))
 
   useEffect(() => {
     dispatch(getApi())
   }, [dispatch])
-  //console.log(api)
 
   return (
     <div className="all">
@@ -33,7 +31,7 @@ export default function ActivityCard({ name, difficulty, duration, season }) {
           Countries
           </div>
         {
-          arrId?.map(e => {
+          arr?.map(e => {
             return (
               <Link to={`/home/${e.id}`}>
                 <Cards name={e.name} continent={e.continent} img={e.img} population={e.population} key={e.id}/>

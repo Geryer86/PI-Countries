@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getActivities } from "../actions";
 import { Link } from "react-router-dom";
 import ActivityCard from "./ActivityCard";
-import SearchBar from "./SearchBar";
+
 
 export default function Activities() {
   const dispatch = useDispatch()

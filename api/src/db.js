@@ -39,6 +39,7 @@ const { Country, Activity } = sequelize.models;
 Country.belongsToMany(Activity, { through: 'Country_activities' });
 Activity.belongsToMany(Country, { through: 'Country_activities' });
 
+
 const dbCountries = axios.get('https://restcountries.com/v3/all')
 .then(res => res.data)
 
