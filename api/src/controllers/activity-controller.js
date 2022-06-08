@@ -38,13 +38,40 @@ router.post('/', async (req, res, next) => {
           },
         });
         await newActivity.addCountries(countryFind);
-        console.log("CREADA")
-        res.send('Activity created');
+        console.log("created")
+        res.send("Activity created");
       } else {
-        console.log("NO CREADA")
-        return res.status(409).send("Activity already exist in some of the selected countries")
+        console.log("not created")
+        return res.status(500).send("Activity already exist in some of the selected countries")
       }
-      // const [newActivity, created] = await Activity.findOrCreate({
+    } else res.status(404).json("Missing data")
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get("/", async (req, res, next) => {
+  const { name } = req.query
+  try {
+    const activities = await getActivity(name)
+    res.send(activities)
+  } catch (error) {
+    console.log("No anduvo")
+    next(error)
+  }
+})
+
+module.exports = router;
+
+/* {
+    "name": "Correr",
+    "difficulty": "1",
+    "duration": 2,
+    "season": "Summer",
+    "countries": ["Albania", "Argentina"]
+ } */
+
+       // const [newActivity, created] = await Activity.findOrCreate({
       //   where: {
       //     name: name,
       //     difficulty: difficulty,
@@ -72,30 +99,3 @@ router.post('/', async (req, res, next) => {
       // } if(created) 
       // res.status(201).send(newActivity)
       // console.log("CREADA")
-    } else res.status(404).json("Missing data")
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get("/", async (req, res, next) => {
-  const { name } = req.query
-  try {
-    const activities = await getActivity(name)
-    res.send(activities)
-    //console.log(activities)
-  } catch (error) {
-    console.log("No anduvo")
-    next(error)
-  }
-})
-
-module.exports = router;
-
-/* {
-    "name": "Correr",
-    "difficulty": "1",
-    "duration": 2,
-    "season": "Summer",
-    "countries": ["Albania", "Argentina"]
- } */

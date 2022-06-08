@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getApi, activityCreate } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import "./styles/CreateActivity.css"
 
 
 export default function ActivityCreate() {
@@ -42,6 +43,7 @@ export default function ActivityCreate() {
   }
 
   const handleSelect = (e) => {
+    if(!activity.countries.includes(e.target.value))
     setActivity({
       ...activity,
       countries: [...activity.countries, e.target.value]
@@ -55,15 +57,15 @@ export default function ActivityCreate() {
     })
   }
 
-  const handleSubmit = (e) => {
-    if(!activity.countries.length) {
+  const handleSubmit = () => {
+    if(!activity.name) {
+      alert("You must name the activity")
+    }
+    else if(!/\D/.test(activity.name)) {
+      alert("Invalid name")
+    }
+    else if(!activity.countries.length) {
       alert("You must choose a country")
-    }
-    else if(typeof activity.name === "integer") {
-      alert("Cannot use numbers")
-    }
-    else if(!activity.name) {
-      alert("You must write a name for the activity")
     }
     else if(!activity.difficulty) {
       alert("You must set the difficulty for the activity")
@@ -72,17 +74,16 @@ export default function ActivityCreate() {
       alert("You must select the season")
     }
     else {
-    dispatch(activityCreate(activity))
-    alert("Activity created")
-    console.log(activity)
-    setActivity({
-      name: "",
-      difficulty: 0,
-      duration: 0,
-      season: "",
-      countries: []
-    })
-   } // history.push('/home');
+      dispatch(activityCreate(activity))
+      alert("Activity created")
+      setActivity({
+        name: "",
+        difficulty: 0,
+        duration: 0,
+        season: "",
+        countries: []
+      }) // history.push('/home');
+    } 
   }
 
   return (
@@ -91,7 +92,7 @@ export default function ActivityCreate() {
         <button>Back</button>
       </Link>
       <div>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form className='form' onSubmit={(e) => handleSubmit(e)}>
           <label>Activity</label>
           <br/>
           <input name='name' type="text" placeholder='Activity name' value={activity.name} onChange={(e) => handleChange(e)}/>
@@ -100,14 +101,14 @@ export default function ActivityCreate() {
           <br/>
           <select onChange={e => handleDifficulty(e)}>
             <option>Select difficulty</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <option value="1">1 (Beginners)</option>
+            <option value="2">2 (Easy)</option>
+            <option value="3">3 (Intermediate)</option>
+            <option value="4">4 (Hard)</option>
+            <option value="5">5 (Professional)</option>
           </select>
           <br/>
-          <label>Duration</label>
+          <label>Duration (hours)</label>
           <br/>
           <input name='duration' type="number" min={1} max={24} value={activity.duration} onChange={(e) => handleChange(e)}/>
           <br/>
@@ -132,7 +133,7 @@ export default function ActivityCreate() {
           </select>
           <h6>Countries</h6>
           {
-            activity.countries.map((e) => <div>
+            activity.countries.map((e) => <div className='select'>
               <button type='reset' onClick={() => handleDeleteCountry(e)}>x</button>
               <p>{e}</p>
             </div>)

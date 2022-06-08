@@ -108,7 +108,7 @@ export default function Home() {
       <div className='btns'>
       <button onClick={(e) => {prev(e)}} disabled={page <= 0}>PREV</button>
 
-      <button onClick={(e) => {handlePage(e)}} value={0} hidden={page >= 40 || allCountries.length < 9}>1</button>
+      <button onClick={(e) => {handlePage(e)}} value={0}>1</button>
       <button onClick={(e) => {handlePage(e)}} value={10} hidden={page >= 50 || allCountries.length < 9}>2</button>
       <button onClick={(e) => {handlePage(e)}} value={20} hidden={page >= 60 || allCountries.length < 9}>3</button>
       <button onClick={(e) => {handlePage(e)}} value={30} hidden={page >= 70 || allCountries.length < 9}>4</button>

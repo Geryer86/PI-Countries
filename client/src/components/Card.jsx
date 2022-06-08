@@ -19,7 +19,7 @@ export default function Card({ name, capital, area, continent, population, img, 
           activities?.map(e => {
             return (
               <div className="actdet">
-                <h5>{e.name}</h5>
+                <h5 className="actName">{e.name}</h5>
                 <h5>Difficulty {e.difficulty}/5</h5>
                 <h5>Duration {e.duration} hours</h5>
                 <h5>{e.season}</h5>

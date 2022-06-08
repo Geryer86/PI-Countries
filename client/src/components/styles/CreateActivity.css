@@ -1,0 +1,18 @@
+.select {
+  background-color: rgb(18, 131, 230, 0.5);
+  border-style:inset;
+  color: black;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: inline-flex;
+  margin: 10px;
+  border-color: black;
+}
+
+.form {
+  color: black;
+  font-family:'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  background-color: rgb(53, 223, 93, 0.25);
+  display: inline-block;
+  border-style:inset;
+  border-color: black;
+}
