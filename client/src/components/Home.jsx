@@ -10,18 +10,18 @@ import Cards from "./Cards";
 export default function Home() {
   const dispatch = useDispatch()
   const allCountries = useSelector(state => state.allCountries)
-  
+
   const [page, setPage] = useState(0)
   const [order, setOrder] = useState()
   const [sort, setSort] = useState("")
   const [continent, setCont] = useState("")
   const [name, setName] = useState("")
-  
+
   useEffect(() => {
     dispatch(getCountries(sort, order, page, continent, name))
     dispatch(getApi())
   }, [dispatch, sort, order, page, continent, name])
-  
+
   const prev = (e) => {
     e.preventDefault();
     setPage(page - 10)
@@ -56,7 +56,7 @@ export default function Home() {
     e.preventDefault();
     setPage(e.target.value)
   }
-  
+
   return(
     <div>
       <Link to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/e/ef/Erioll_world_2.svg' width="50px"></img></Link>
@@ -71,6 +71,7 @@ export default function Home() {
           <option disabled={sort}>By</option>
           <option value="name">Alphabetic</option>
           <option value="population">Population</option>
+          <option value="area">Area</option>
         </select>
         <select onChange={(e) => selectCont(e)}>
           <option value="">All the world</option>
@@ -140,35 +141,6 @@ export default function Home() {
   )
 }
 
-  // useEffect(() => {
-  //   dispatch(getCountriesAlp(orderByAlp, page)) //mapDispatchToProps
-  // },[dispatch, orderByAlp, page])
-
-  // useEffect(() => {
-  //   dispatch(getCountriesPop(orderByPop, page))
-  // },[dispatch, orderByPop, page])
-
-  // useEffect(() => {
-  //   dispatch(getCountriesContA(continent, orderByAlp, page))
-  // },[dispatch, continent, orderByAlp, page])
-
-  // useEffect(() => {
-  //   dispatch(getCountriesContP(continent, orderByPop, page))
-  // },[dispatch, continent, orderByPop, page])
-
-  
-  // const orderAlph = (e) => {
-  //   e.preventDefault();
-  //   setAlp(e.target.value);
-  // }
-
-  // const orderPop = (e) => {
-  //   e.preventDefault();
-  //   setPop(e.target.value);
-  // }
-
-  // import { getCountriesAlp, getCountriesPop, getDetails, getCountriesContA, getCountriesContP, getCountries } from "../actions";
-
   // const countryById = (e) => {
   //   e.preventDefault();
   //   getCountryById(e.id)
@@ -176,11 +148,6 @@ export default function Home() {
   
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  // }
-
-  // const handlePage = (e) => {
-  //   e.preventDefault();
-  //   setPage(e.target.value)
   // }
 
   // import Pagination from './Pagination';

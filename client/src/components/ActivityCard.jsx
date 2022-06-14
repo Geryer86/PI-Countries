@@ -7,7 +7,7 @@ import { getApi } from "../actions";
 import { Link } from "react-router-dom";
 
 
-export default function ActivityCard({ name, difficulty, duration, season, id }) {
+export default function ActivityCard({ name, difficulty, duration, season }) {
 
   const dispatch = useDispatch()
   const api = useSelector(state => state.api)
@@ -25,7 +25,6 @@ export default function ActivityCard({ name, difficulty, duration, season, id })
       <h4>Duration {duration} hours</h4>
       <h5>{season}</h5>
       </div>
-      
         <div className="actcards">
           <div>
           Countries
@@ -44,35 +43,4 @@ export default function ActivityCard({ name, difficulty, duration, season, id })
   );
 }
 
-// var arr = [
-//   {
-//     na: 1,
-//     ac:[
-//       {a:1,b:1},{a:2,b:2},{a:3,b:3}
-//     ]
-//   },
-//   {
-//     na: 2,
-//     ac:[
-//       {a:4,b:4},{a:5,b:5},{a:6,b:6}
-//     ]
-//   },
-//   {
-//     na:3,
-//     ac:[
-//       {a:7,b:7},{a:3,b:8},{a:9,b:9}
-//     ]
-//   }
-// ]
-// var arr1 = arr.filter(e => e.ac.find(c=>c.a===3))
-// {
-//   countries?.map(e => {
-//     console.log(countries)
-//     return (
-//       <div>
-//         <h5>{e.name}</h5>
-//       </div>
-//     )
-//   })
-// }
 

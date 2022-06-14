@@ -3,9 +3,9 @@ const { Router } = require('express');
 const router = Router();
 const axios = require('axios');
 const { Op } = require('sequelize');
-const getActivity = require('../functions/getActivities')
+const {getActivity, getActivityById} = require('../functions/getActivities')
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   const { name, difficulty, duration, season, countries } = req.body
   try {
     if (name && difficulty && duration && season && countries) {
@@ -56,10 +56,22 @@ router.get("/", async (req, res, next) => {
     const activities = await getActivity(name)
     res.send(activities)
   } catch (error) {
-    console.log("No anduvo")
     next(error)
   }
 })
+
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const activities = await Activity.findByPk(id)
+    await activities.destroy()
+    res.send(activities)
+    //res.send("Activity deleted")
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 module.exports = router;
 
@@ -71,31 +83,3 @@ module.exports = router;
     "countries": ["Albania", "Argentina"]
  } */
 
-       // const [newActivity, created] = await Activity.findOrCreate({
-      //   where: {
-      //     name: name,
-      //     difficulty: difficulty,
-      //     duration: duration,
-      //     season: season
-      //   },
-      //   include: [{
-      //     model: Country,
-      //     where: {
-      //       name: countries
-      //     }
-      //   }]
-      // })
-      // const countryFind = await Country.findAll({
-      //   where: {
-      //     name: {
-      //       [Op.or]: countries
-      //     }
-      //   }
-      // })
-      // await newActivity.addCountries(countryFind)
-      // if (!created) {
-      //   console.log("YA EXISTE")
-      //   res.send("LA ACTIVIDAD YA EXISTE EN ALGUNO DE LOS PAISES SELECCIONADOS")
-      // } if(created) 
-      // res.status(201).send(newActivity)
-      // console.log("CREADA")

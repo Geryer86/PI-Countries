@@ -17,4 +17,7 @@ async function getActivity(name) {
   return activities
 };
 
-module.exports = getActivity;
+
+module.exports = { 
+  getActivity,
+}

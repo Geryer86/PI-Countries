@@ -98,88 +98,27 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.get("/search/:name", async (req, res, next) => {
+  const nameSearch = req.params.name
+  try {
+    const countryByName = await Country.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${nameSearch}%`
+        }
+      },
+      limit: 10,
+      order: [["name", "ASC"]],
+      include: Activity
+    })
+    res.send(countryByName);
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 module.exports = router;
 
 
-//const idCountry = req.params.id;
-//const idCountryM = idCountry.toUpperCase()
-
-// router.get('/', async (req, res, next) => {
-//   const { page, orderBy, order, continent } = req.query;
-//   try {
-//     if (continent) {
-//       if (orderByAlp) {
-//         const countriesContA = await Country.findAll({
-//           where: {
-//             continent: continent
-//           },
-//           limit: 10,
-//           offset: page,
-//           order: [["name", orderByAlp]],
-//           include: Activity
-//         })
-//         res.json(countriesContA)
-//       } else if (orderByPop) {
-//         const countriesContP = await Country.findAll({
-//           where: {
-//             continent: continent
-//           },
-//           limit: 10,
-//           offset: page,
-//           order: [["population", orderByPop]],
-//           include: Activity
-//         })
-//         res.json(countriesContP)
-//       }
-//     } else if (orderByAlp) {
-//       const countriesAlp = await Country.findAll({
-//         limit: 10,
-//         offset: page,
-//         order: [["name", orderByAlp]],
-//         include: Activity
-//       })
-//       res.json(countriesAlp)
-//     } else if (orderByPop) {
-//       const countriesPop = await Country.findAll({
-//         limit: 10,
-//         offset: page,
-//         order: [["population", orderByPop]],
-//         include: Activity
-//       })
-//       res.json(countriesPop)
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-// if (activities) {
-//   const countriesAct = await Country.findAll({
-//     where: {
-//       Activity: activities
-//     },
-//     limit: 10,
-//     offset: page,
-//     order: [[orderBy, order]],
-//   })
-//   res.json(countriesAct)
-// }
-
-// router.get("/search/:name", async (req, res, next) => {
-//   const nameSearch = req.params.name
-//   try {
-//     const countryByName = await Country.findAll({       // const countryByName = await allCountries.filter(e => e.name.toLowerCase().includes(name.toLocaleLowerCase()));
-//       where: {
-//         name: {
-//           [Op.iLike]: `%${nameSearch}%`
-//         }
-//       },
-//       limit: 10,
-//       order: [["name", "ASC"]],
-//       include: Activity
-//     })
-//     res.send(countryByName);
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// const countryByName = await allCountries.filter(e => e.name.toLowerCase().includes(name.toLocaleLowerCase()));

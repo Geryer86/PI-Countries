@@ -17,6 +17,7 @@ export default function Activities() {
 
   return (
     <div>
+      Activities
       <div>
         <Link to="/activities/createActivity">
           <button>Create Activity</button>

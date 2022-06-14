@@ -57,7 +57,8 @@ export default function ActivityCreate() {
     })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     if(!activity.name) {
       alert("You must name the activity")
     }
@@ -146,23 +147,3 @@ export default function ActivityCreate() {
   )
 }
 
-//const act = useSelector((state) => state.activities)
-//const arr = act.filter(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season) && (c.countries.find(e => e.name === countries.name)))
-//const arr = countries.filter(a => a.activities.find(c => (c.name === name) && (c.difficulty === difficulty) && (c.duration === duration) && (c.season === season)))
-//const arrId = countries.filter(a => a.activities.find(c => c.id))
-
-//const platforms = useSelector((state) => state.platforms);
-//const history = useHistory()
-
-// const handlePlatform = (e) => {
-//   setInput({
-//     ...input,
-//     platforms: [...input.platforms, e.target.value]
-//   })
-// }
-
-  // const handleDeletePlatforms = (e) => {
-  //   setInput({
-  //     ...input,
-  //     genre: input.genre.filter(pla => pla !== e)
-  //   })

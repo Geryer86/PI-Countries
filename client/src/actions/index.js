@@ -81,48 +81,18 @@ export function activityCreate(payload) {
   }
 }
 
+export function activityDelete(id) {
+  return async function () {
+    try {
+      const json = await axios.delete(`http://localhost:3001/activity/${id}`)
+      return json
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const GET_COUNTRIES = "GET_COUNTRIES";
 export const GET_COUNTRY_ID = "GET_COUNTRY_ID";
 export const GET_COUNTRY_NAME = "GET_COUNTRY_NAME";
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
-
-
-// export function getCountriesAlp(orderByAlp, page) {
-//   return async function (dispatch) {
-//     const json = await axios.get(`http://localhost:3001/countries?page=${page}&orderByAlp=${orderByAlp}`); //`http://localhost:3001/countries?page=${page}&order=${order}&orderBy=${orderBy}`
-//     return dispatch({
-//       type: "GET_COUNTRIES",
-//       payload: json.data
-//     })
-//   }
-// }
-
-// export function getCountriesPop(orderByPop, page) {
-//   return async function (dispatch) {
-//     const json = await axios.get(`http://localhost:3001/countries?page=${page}&orderByPop=${orderByPop}`)
-//     return dispatch({
-//       type: "GET_COUNTRIES",
-//       payload: json.data
-//     })
-//   }
-// }
-
-// export function getCountriesContA(continent, orderByAlp, page) {
-//   return async function (dispatch) {
-//     const json = await axios.get(`http://localhost:3001/countries?page=${page}&continent=${continent}&orderByAlp=${orderByAlp}`)
-//     return dispatch({
-//       type: "GET_COUNTRIES",
-//       payload: json.data
-//     })
-//   }
-// }
-
-// export function getCountriesContP(continent, orderByPop, page) {
-//   return async function (dispatch) {
-//     const json = await axios.get(`http://localhost:3001/countries?page=${page}&continent=${continent}&orderByAlp=${orderByPop}`)
-//     return dispatch({
-//       type: "GET_COUNTRIES",
-//       payload: json.data
-//     })
-//   }
-// }
