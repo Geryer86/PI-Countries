@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getApi() {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/countries`)
+      const json = await axios.get(`/countries`)
       return dispatch({
         type: "GET_API",
         payload: json.data
@@ -17,7 +17,7 @@ export function getApi() {
 export function getCountries(sort, order, page, continent, name) {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/countries/filter?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
+      const json = await axios.get(`/countries/filter?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
       return dispatch({
         type: "GET_COUNTRIES",
         payload: json.data
@@ -31,7 +31,7 @@ export function getCountries(sort, order, page, continent, name) {
 export function getCountryById(id) {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/countries/${id}`);
+      const json = await axios.get(`/countries/${id}`);
       return dispatch({
         type: "GET_COUNTRY_ID",
         payload: json.data
@@ -45,7 +45,7 @@ export function getCountryById(id) {
 export function getCountryByName(name) {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/countries/search/${name}`);
+      const json = await axios.get(`/countries/search/${name}`);
       return dispatch({
         type: "GET_COUNTRY_NAME",
         payload: json.data
@@ -59,7 +59,7 @@ export function getCountryByName(name) {
 export function getActivities(name) {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`http://localhost:3001/activity?name=${name}`);
+      const json = await axios.get(`/activity?name=${name}`);
       return dispatch({
         type: "GET_ACTIVITIES",
         payload: json.data
@@ -73,7 +73,7 @@ export function getActivities(name) {
 export function activityCreate(payload) {
   return async function () {
     try {
-      const json = await axios.post(`http://localhost:3001/activity`, payload)
+      const json = await axios.post(`/activity`, payload)
       return json
     } catch (error) {
       console.log(error)
@@ -84,7 +84,7 @@ export function activityCreate(payload) {
 export function activityDelete(id) {
   return async function () {
     try {
-      const json = await axios.delete(`http://localhost:3001/activity/${id}`)
+      const json = await axios.delete(`/activity/${id}`)
       return json
     } catch (error) {
       console.log(error)
