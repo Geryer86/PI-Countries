@@ -3,7 +3,7 @@ const { Router } = require('express');
 const router = Router();
 const axios = require('axios');
 const { Op } = require('sequelize');
-const {getActivity, getActivityById} = require('../functions/getActivities')
+const { getActivity, getActivityById } = require('../functions/getActivities')
 
 router.post("/", async (req, res, next) => {
   const { name, difficulty, duration, season, countries } = req.body
@@ -19,11 +19,11 @@ router.post("/", async (req, res, next) => {
         include: [{
           model: Country,
           where: { name: countries }
-        }]     
+        }]
       });
       if (activityExist === null) {
         const [newActivity, created] = await Activity.findOrCreate({
-          where:{
+          where: {
             name: name,
             difficulty: difficulty,
             duration: duration,
