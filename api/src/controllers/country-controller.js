@@ -4,6 +4,7 @@ const router = Router();
 const { Op } = require('sequelize')
 const axios = require('axios');
 const getApi = require('../db');
+const getApiTxt = require('../sevices/api_countries')
 
 // const dbCountries = axios.get('https://restcountries.com/v3/all')
 // .then(res => res.data)
@@ -32,7 +33,7 @@ router.get("/", async (req, res, next) => {
   try {
     const countries = await Country.findAll()
     if(!countries.length) {
-      let apiCountries = getApi()
+      let apiCountries = getApiTxt()
       apiCountries.map((e) => {
         Country.findOrCreate({
           where: {
