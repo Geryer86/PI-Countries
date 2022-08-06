@@ -14,12 +14,26 @@ export function getApi() {
   }
 }
 
-export function getCountries(sort, order, page, continent, name) {
+export function getCountries(sort, order, page, continent, name, limit, language) {
   return async function (dispatch) {
     try {
-      const json = await axios.get(`/countries/filter?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}`)
+      const json = await axios.get(`/countries/filter?sort=${sort}&order=${order}&page=${page}&continent=${continent}&name=${name}&limit=${limit}&language=${language}`)
       return dispatch({
         type: "GET_COUNTRIES",
+        payload: json.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getCountriesNL(sort, order, continent, name, language) {
+  return async function (dispatch) {
+    try {
+      const json = await axios.get(`/countries/filter?sort=${sort}&order=${order}&continent=${continent}&name=${name}&language=${language}`)
+      return dispatch({
+        type: "GET_COUNTRIES_NL",
         payload: json.data
       })
     } catch (error) {

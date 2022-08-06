@@ -3,31 +3,8 @@ const { Router } = require('express');
 const router = Router();
 const { Op } = require('sequelize')
 const axios = require('axios');
-const getApi = require('../db');
+
 const getApiTxt = require('../sevices/api_countries')
-
-// const dbCountries = axios.get('https://restcountries.com/v3/all')
-// .then(res => res.data)
-
-// dbCountries.then(r => {
-//   r.map(e => {
-//     Country.findOrCreate({
-//       where: {
-//         id: e.cca3
-//       },
-//       defaults: {
-//         id: e.cca3,
-//         name: e.name.common,
-//         img: e.flags[0],
-//         continent: e.continents[0],
-//         capital: e.capital,
-//         subregion: e.subregion,
-//         area: e.area,
-//         population: e.population
-//       }
-//     })
-//   })
-// });
 
 router.get("/", async (req, res, next) => {
   try {
@@ -54,7 +31,6 @@ router.get("/", async (req, res, next) => {
       let totalData = await Country.findAll({
         include: [{
           model: Activity,
-          //attributes: ["name"],
           through: {
             attributes: []
           }
@@ -65,7 +41,6 @@ router.get("/", async (req, res, next) => {
       let totalData = await Country.findAll({
         include: [{
           model: Activity,
-          //attributes: ["name"],
           through: {
             attributes: []
           }
@@ -78,79 +53,23 @@ router.get("/", async (req, res, next) => {
   }
 })
 
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const countries = await Country.findAll({
-//       include: Activity
-//     })
-//     res.json(countries)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
 router.get("/filter", async (req, res, next) => {
-  const { page, sort, order, continent, name } = req.query;
   try {
-    if (name && continent) {
-      const countries = await Country.findAll({
-        where: {
-          name: { [Op.iLike]: `${name}%` },
-          continent: continent,
-        },
-        limit: 10,
-        offset: page,
-        include: Activity
-      })
-      res.json(countries)
+    const { page, sort, order, limit, continent, name, language } = req.query;
+    let condition = {};
+    let where = {};
+    if (name && name.length > 2) {
+      where.name = {[Op.iLike]: `${name}%`}
     }
-    else if (name && name.length > 1) {
-      const countries = await Country.findAll({
-        where: {
-          name: { [Op.iLike]: `${name}%` },
-        },
-        limit: 10,
-        offset: page,
-        include: Activity
-      })
-      res.json(countries)
-    }  
-    else if (continent) {
-      const countries = await Country.findAll({
-        where: {
-          continent: continent
-        },
-        limit: 10,
-        offset: page,
-        order: [[sort, order]],
-        include: Activity
-      })
-      res.json(countries)
-    } 
-    else if (sort && order) {
-      const countries = await Country.findAll({
-        limit: 10,
-        offset: page,
-        order: [[sort, order]],
-        include: Activity
-      })
-      res.json(countries)
-    } 
-    else if (page < 1) {
-      const countries = await Country.findAll({
-        limit: 9,
-        offset: page,
-        include: Activity
-      })
-      res.json(countries)
-    } else if (page > 9 && page < 249) {
-      const countries = await Country.findAll({
-        limit: 10,
-        offset: page,
-        include: Activity
-      })
-      res.json(countries)
-    } 
+    if (continent) {
+      where.continent = continent
+    }
+    condition.where = where;
+    limit ? condition.limit = limit : !condition.limit;
+    page ? condition.offset = page : !condition.offset;
+    sort && order ? condition.order = [[sort, order]] : !condition.order;
+    let countries = await Country.findAll(condition)
+    res.send(countries)
   } catch (error) {
     next(error)
   }
@@ -192,8 +111,4 @@ router.get("/search/:name", async (req, res, next) => {
   }
 })
 
-
 module.exports = router;
-
-
-// const countryByName = await allCountries.filter(e => e.name.toLowerCase().includes(name.toLocaleLowerCase()));

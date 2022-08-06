@@ -69,11 +69,6 @@ const { Country, Activity } = sequelize.models;
 Country.belongsToMany(Activity, { through: 'Country_activities' });
 Activity.belongsToMany(Country, { through: 'Country_activities' });
 
-function getApi() {
-  let dbCountries = axios.get('https://restcountries.com/v3/all').data
-  return dbCountries
-}
-
 // const dbCountries = axios.get('https://restcountries.com/v3/all')
 // .then(res => res.data)
 
@@ -100,5 +95,4 @@ function getApi() {
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
-  getApi
 };
