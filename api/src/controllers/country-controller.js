@@ -2,56 +2,6 @@ const { Country, Activity } = require('../db')
 const { Router } = require('express');
 const router = Router();
 const { Op } = require('sequelize')
-const axios = require('axios');
-
-const getApiTxt = require('../sevices/api_countries')
-
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const countries = await Country.findAll()
-//     if(!countries.length) {
-//       let apiCountries = getApiTxt()
-//       apiCountries.map((e) => {
-//         Country.findOrCreate({
-//           where: {
-//             id: e.cca3
-//           },
-//           defaults: {
-//             id: e.cca3,
-//             name: e.name.common,
-//             img: e.flags[0],
-//             continent: e.continents[0],
-//             capital: e.capital,
-//             subregion: e.subregion,
-//             area: e.area,
-//             population: e.population
-//           }
-//         })
-//       })
-//       let totalData = await Country.findAll({
-//         include: [{
-//           model: Activity,
-//           through: {
-//             attributes: []
-//           }
-//         }]
-//       })
-//       res.send(totalData);
-//     } else {
-//       let totalData = await Country.findAll({
-//         include: [{
-//           model: Activity,
-//           through: {
-//             attributes: []
-//           }
-//         }]
-//       })
-//       res.send(totalData)
-//     }
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 
 router.get("/", async (req, res, next) => {
   try {
