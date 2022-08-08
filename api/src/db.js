@@ -6,6 +6,7 @@ const axios = require('axios');
 const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env;
+const getApiTxt = require('./sevices/api_countries')
 
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -69,7 +70,27 @@ const { Country, Activity } = sequelize.models;
 Country.belongsToMany(Activity, { through: 'Country_activities' });
 Activity.belongsToMany(Country, { through: 'Country_activities' });
 
-// const dbCountries = axios.get('https://restcountries.com/v3/all')
+const dbCountries = getApiTxt()
+
+dbCountries.map((e) => {
+  Country.findOrCreate({
+    where: {
+      id: e.cca3
+    },
+    defaults: {
+      id: e.cca3,
+      name: e.name.common,
+      img: e.flags[0],
+      continent: e.continents[0],
+      capital: e.capital,
+      subregion: e.subregion,
+      area: e.area,
+      population: e.population
+    }
+  })
+})
+
+//const dbCountries = axios.get('https://restcountries.com/v3/all')
 // .then(res => res.data)
 
 // dbCountries.then(r => {

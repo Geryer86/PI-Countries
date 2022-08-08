@@ -20,21 +20,22 @@ export default function Pagination({ limit, page, pagination }) {
     <div className='paginado'>
       {
         <ul>
-          <button disabled={currentPage<2} onClick={() => pagination(currentPage - 1)}>PREV</button>
+          <button className='prevNext' disabled={currentPage<2} onClick={() => pagination(currentPage - 1)}>PREV</button>
           {
-            <button onClick={() => pagination(1)}>{1}</button>
+            <button className={currentPage===1?'PagActive':'PagInactive'} onClick={() => pagination(1)}>{1}</button>
           }
           {
             pageNum5.map(number => {
+              let current = (currentPage === number)
               return (
-                <button onClick={() => pagination(number)}>{number}</button>
+                <button className={current?'PagActive':'PagInactive'} onClick={() => pagination(number)}>{number}</button>
               )
             })
           }
           {
-            <button onClick={() => pagination(pageQty)}>{pageQty}</button>
+            <button className={currentPage===pageQty?'PagActive':'PagInactive'} onClick={() => pagination(pageQty)}>{pageQty}</button>
           }
-          <button disabled={currentPage>=pageQty} onClick={() => pagination(currentPage + 1)}>NEXT</button>
+          <button className='prevNext' disabled={currentPage>=pageQty} onClick={() => pagination(currentPage + 1)}>NEXT</button>
         </ul>
       }
     </div>

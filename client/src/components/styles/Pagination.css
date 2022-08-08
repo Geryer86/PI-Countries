@@ -24,29 +24,40 @@
   transform: scale(1.15);
 }
 
-/* .PaginadoActive{
-  margin: 0 0.1rem;
+.PagActive{
   background-color: #1a83ff;
   color: #000;
-  font-size: medium;
-  height: 2.5rem;
+  height: 1.5rem;
   width: 1.5rem;
-  border-radius: 7px;
+  border-radius: 3px;
   border: none;
-} */
+}
 
-/* .PaginadoInactive{
-  margin: 0 0.1rem;
+.PagInactive{
   background-color: black;
   color: #c7a84b;
-  font-size: medium;
-  height: 2.5rem;
+  height: 1.5rem;
   width: 1.5rem;
-  border-radius: 7px;
+  border-radius: 3px;
   border: none;
-} */
+}
 
-.PaginadoInactive:hover, .PaginadoActive:hover{
+.PagInactive:hover, .PagActive:hover{
+  background-color: #c7a84b;
+  color: black;
+  transition: 0.2s;
+}
+
+.prevNext{
+  background-color: black;
+  color: #c7a84b;
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 3px;
+  border: none;
+}
+
+.prevNext:hover{
   background-color: #c7a84b;
   color: black;
   transition: 0.2s;

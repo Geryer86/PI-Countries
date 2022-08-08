@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getApi, getCountries, getCountriesNL } from "../actions";
 import { Link } from "react-router-dom";
 import Cards from "./Cards";
-import Pagination from './Pagination';
+import Pagination from './Pagination.jsx';
 
 
 export default function Home() {
@@ -71,18 +71,18 @@ export default function Home() {
       <Link to="/"><img src='https://upload.wikimedia.org/wikipedia/commons/e/ef/Erioll_world_2.svg' width="50px"></img></Link>
       <h1 className='world'>...the World!</h1>
       <div>
-        <select onChange={(e) => handleOrder(e)}>
+        <select className='selects' onChange={(e) => handleOrder(e)}>
           <option disabled={order}>Order</option>
           <option value="ASC">Upward</option>
           <option value="DESC">Downward</option>
         </select>
-        <select onChange={(e) => handleSort(e)}>
+        <select className='selects' onChange={(e) => handleSort(e)}>
           <option disabled={sort}>By</option>
           <option value="name">Alphabetic</option>
           <option value="population">Population</option>
           <option value="area">Area</option>
         </select>
-        <select onChange={(e) => selectCont(e)}>
+        <select className='selects' onChange={(e) => selectCont(e)}>
           <option value="">All the world</option>
           <option value="Africa">Africa</option>
           <option value="Antarctica">Antarctica</option>
@@ -93,7 +93,7 @@ export default function Home() {
           <option value="Oceania">Oceania</option>
         </select>
         {/* SearchBar */}
-        <input type="text" placeholder='Search country' value={name} onChange={(e) => filterName(e)}/>
+        <input className='selects' type="text" placeholder='Search country' value={name} onChange={(e) => filterName(e)}/>
         <div>
           <div>
           <Link to="/activities">

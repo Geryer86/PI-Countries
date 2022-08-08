@@ -39,3 +39,16 @@
   background-color: hsl(224, 75%, 51%, 0.4);
 }
 
+.selects {
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
+  float: center;
+  padding: 4px 8px;
+  margin-top: 80px;
+  text-decoration: none;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: rgba(62, 138, 231, 0.92);
+}
+
